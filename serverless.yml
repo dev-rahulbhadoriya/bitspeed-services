@@ -1,0 +1,37 @@
+org: rahulbhadoriya
+service: bitspeed-nodeservices
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  memorySize: 2048
+  stage: dev
+  region: ap-south-1
+
+plugins:
+  - serverless-dotenv-plugin
+
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - httpApi: 
+          path: /{proxy+}
+          method: ANY
+      - httpApi: 
+          path: /
+          method: ANY
+    environment:
+      PORT: ${process.env.PORT}
+      NODE_ENV: ${process.env.NODE_ENV}
+      EXPRESS_SESSION_SECRET: ${process.env.EXPRESS_SESSION_SECRET}
+      DB_USER: ${process.env.DB_USER}
+      DB_PASSWORD: ${process.env.DB_PASSWORD}
+      DB_HOST: ${process.env.DB_HOST}
+      DB_DIALECT: ${process.env.DB_DIALECT}
+      DB_PORT: ${process.env.DB_PORT}
+      DB_CA: ${process.env.DB_CA}
+      ACCESS_TOKEN_SECRET: ${process.env.ACCESS_TOKEN_SECRET}
+      ACCESS_TOKEN_EXPIRY: ${process.env.ACCESS_TOKEN_EXPIRY}
+      REFRESH_TOKEN_SECRET: ${process.env.REFRESH_TOKEN_SECRET}
+      REFRESH_TOKEN_EXPIRY: ${process.env.REFRESH_TOKEN_EXPIRY}
